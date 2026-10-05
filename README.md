@@ -11,8 +11,6 @@ It runs in two modes:
 
 It also includes a small [Rust program](#rust-reader) that reads the same dataset.
 
-![MCP Inspector calling search_postings](docs/inspector-screenshot.png)
-
 ---
 
 ## Tools
