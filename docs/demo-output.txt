@@ -1,0 +1,90 @@
+Tools: search_postings, count_postings_by_company, get_posting
+
+=== search_postings({'skill': 'rust', 'remote_only': True, 'limit': 3}) -> OK
+{
+  "skill": "Rust",
+  "total_matches": 6,
+  "returned": 3,
+  "postings": [
+    {
+      "id": "JP-018",
+      "title": "Junior Data Engineer",
+      "company": "Lumen Robotics",
+      "location": "Berlin, Germany",
+      "remote": true,
+      "seniority": "junior",
+      "salary_usd": "39,000-52,000"
+    },
+    {
+      "id": "JP-020",
+      "title": "Senior Platform Engineer",
+      "company": "Lumen Robotics",
+      "location": "Berlin, Germany",
+      "remote": true,
+      "seniority": "senior",
+      "salary_usd": "87,000-108,000"
+    },
+    {
+      "id": "JP-029",
+      "title": "Junior Rust Developer",
+      "company": "Orbit Cloud",
+      "location": "Austin, USA",
+      "remote": true,
+      "seniority": "junior",
+      "salary_usd": "30,000-51,000"
+    }
+  ],
+  "note": "Showing 3 of 6. Raise 'limit' or add filters to see more."
+}
+
+=== count_postings_by_company({'skill': 'Python', 'top_n': 3}) -> OK
+{
+  "skill": "Python",
+  "total_postings": 20,
+  "total_companies": 6,
+  "companies": [
+    {
+      "company": "Northwind Analytics",
+      "postings": 5
+    },
+    {
+      "company": "Bluefin Data",
+      "postings": 4
+    },
+    {
+      "company": "Harbor Security",
+      "postings": 3
+    }
+  ]
+}
+
+=== get_posting({'posting_id': 'JP-038'}) -> OK
+{
+  "id": "JP-038",
+  "title": "Senior Rust Developer",
+  "company": "Harbor Security",
+  "location": "Toronto, Canada",
+  "remote": true,
+  "seniority": "senior",
+  "skills": [
+    "AWS",
+    "Rust"
+  ],
+  "salary_usd": {
+    "min": 88000,
+    "max": 104000
+  },
+  "posted_date": "2026-07-11"
+}
+
+=== search_postings({'skill': 'Pyhton'}) -> ERROR
+Error executing tool search_postings: No postings list the skill 'Pyhton'. Did you mean: Python? Known skills: Airflow, AWS, C++, dbt, Django, Docker, GCP, Go, GraphQL, gRPC, Kafka, Kubernetes, Linux, Node.js, OAuth 2.0, PostgreSQL, Python, React, ROS, Rust, Scala, Spark, Splunk, SQL, Terraform, TypeScript.
+
+=== search_postings({'skill': 'Python', 'limit': 500}) -> ERROR
+Error executing tool search_postings: 1 validation error for search_postingsArguments
+limit
+  Input should be less than or equal to 25 [type=less_than_equal, input_value=500, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.13/v/less_than_equal
+
+=== get_posting({'posting_id': 'JP-7'}) -> ERROR
+Error executing tool get_posting: 'JP-7' is not a valid posting ID. IDs look like 'JP-001'; get them from search_postings.
