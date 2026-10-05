@@ -121,6 +121,22 @@ npx @modelcontextprotocol/inspector   # choose "Streamable HTTP", URL http://loc
 The server refuses to start without a secret of at least 32 characters. Secrets come only from the
 environment and are never committed (see [.env.example](.env.example)).
 
+### Deploy to Railway
+
+The [Dockerfile](Dockerfile) runs the authenticated HTTP server and listens on Railway's `$PORT`.
+
+1. In Railway, create a project from this GitHub repo. Railway builds it with the Dockerfile.
+2. Under **Settings → Networking**, click **Generate Domain**.
+3. Under **Variables**, set:
+   - `MCP_JWT_SECRET`: a new random secret (`python -c 'import secrets; print(secrets.token_urlsafe(32))'`)
+   - `MCP_SERVER_URL`: `https://<your-domain>.up.railway.app/mcp`
+4. Issue a token locally with the same values, and connect the Inspector to the Railway URL:
+
+```bash
+MCP_JWT_SECRET=<same secret> MCP_SERVER_URL=https://<your-domain>.up.railway.app/mcp \
+  python scripts/issue_dev_token.py --scope "postings:read postings:stats"
+```
+
 ---
 
 ## Protecting the server with OAuth 2.0

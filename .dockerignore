@@ -1,0 +1,9 @@
+.venv/
+.git/
+__pycache__/
+*.egg-info/
+.pytest_cache/
+rust_reader/target/
+.env
+tests/
+docs/

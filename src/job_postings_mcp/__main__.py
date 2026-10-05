@@ -43,7 +43,9 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Job postings MCP server")
     parser.add_argument("--http", action="store_true", help="Serve over Streamable HTTP with bearer token auth")
     parser.add_argument("--host", default="127.0.0.1", help="HTTP host (default: 127.0.0.1)")
-    parser.add_argument("--port", type=int, default=8000, help="HTTP port (default: 8000)")
+    # Hosting platforms like Railway pass the port to listen on in $PORT.
+    default_port = int(os.environ.get("PORT", 8000))
+    parser.add_argument("--port", type=int, default=default_port, help="HTTP port (default: $PORT or 8000)")
     args = parser.parse_args()
 
     # Logs go to stderr: on stdio, stdout is reserved for MCP protocol messages.
